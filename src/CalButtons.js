@@ -1,9 +1,19 @@
 import React from 'react';
+import { Card, CardContent, Button , Grid, blue} from '@material-ui/core'
 
 function CalButton(props){
 
     return(
         <div>
+            >
+            <Grid container spacing={3} justify="center">
+                <Grid item >
+                    
+                    <Button color="primary" id="zero" value="0" onClick={props.displayItem}>0</Button>
+                    <Button color="blue"  id="one" value="1" onClick={props.displayItem}>1</Button>
+                   
+                </Grid>
+            </Grid>
             <button id="zero" value="0" onClick={props.displayItem}>0</button>
             <button id="one" value="1" onClick={props.displayItem}>1</button>
             <button id="two" value="2" onClick={props.displayItem}>2</button>
