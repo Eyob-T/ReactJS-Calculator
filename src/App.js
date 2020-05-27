@@ -23,29 +23,32 @@ class App extends React.Component{
     this.calculate=this.calculate.bind(this)
   }
 
-  displayItem(e){
+  displayItem(e, itemValue){
     e.preventDefault();
-    console.log("in display itwem !! " + e.currentTarget.value)
+    console.log("itemValue = " + itemValue)
+    console.log("e.target.val = " + e.target.value)
+    console.log("e.currentTarget = " + e.currentTarget)
+    console.log("in display itwem !! " + itemValue)
     console.log(this.state.display.length)
     console.log(this.state.display)
 
-    const isNum = !isNaN(parseInt(e.currentTarget.value))
-    console.log("current item " + e.currentTarget.value + " prev Item " + this.state.prevItem)
+    const isNum = !isNaN(parseInt(itemValue))
+    console.log("current item " + itemValue + " prev Item " + this.state.prevItem)
     console.log("IS NUM ? " + isNum + " prevNum? " + !isNaN(this.state.prevItem) + " deciaml " + this.state.decimal + " decimal allowed " + this.state.decimalAllowed)
 
     
     //if at initial state, don't add zero
-    if((this.state.display[0] === "0" && e.currentTarget.value === "0") || (this.state.decimal && !isNum) || (!this.state.decimalAllowed && e.currentTarget.value === ".")){
+    if((this.state.display[0] === "0" && itemValue === "0") || (this.state.decimal && !isNum) || (!this.state.decimalAllowed && itemValue === ".")){
      
     }
     else {
       //don't allow 1st number = 0 OR equalClicked and is number
-      if(this.state.display[0] === "0" || (this.state.equalClicked && !isNaN(parseInt(e.currentTarget.value)))){
+      if(this.state.display[0] === "0" || (this.state.equalClicked && !isNaN(parseInt(itemValue)))){
         console.log("WHAAAATATATT")
         this.setState({
-          display: e.currentTarget.value,
+          display: itemValue,
           equalClicked:false,
-          prevItem:e.currentTarget.value
+          prevItem:itemValue
         })
         console.log("equal clicked " + this.state.equalClicked)
 
@@ -63,61 +66,61 @@ class App extends React.Component{
           if (this.state.combo && !isNum){
 
             const newDisplay = [...this.state.display]
-            newDisplay.splice(newDisplay.length-2,2,e.currentTarget.value)
+            newDisplay.splice(newDisplay.length-2,2,itemValue)
 
             this.setState({
               display: newDisplay,
-              prevItem: e.currentTarget.value,
+              prevItem: itemValue,
               combo:false
             })
           }
-          else if (!this.state.decimalAllowed && (e.currentTarget.value === "+" || e.currentTarget.value === "-" || e.currentTarget.value === "*" || e.currentTarget.value ==="/")){
-            const newItems = [...this.state.display,e.currentTarget.value]
+          else if (!this.state.decimalAllowed && (itemValue === "+" || itemValue === "-" || itemValue === "*" || itemValue ==="/")){
+            const newItems = [...this.state.display,itemValue]
             this.setState({
              display:newItems,
-             prevItem: e.currentTarget.value,
+             prevItem: itemValue,
              decimalAllowed:true
             }) 
           }
           else{  
-              if(this.state.prevItem === "+" &&  e.currentTarget.value === "-"){
-                  const newItems = [...this.state.display,e.currentTarget.value]
+              if(this.state.prevItem === "+" &&  itemValue === "-"){
+                  const newItems = [...this.state.display,itemValue]
                    this.setState({
                     display:newItems,
-                    prevItem: e.currentTarget.value,
+                    prevItem: itemValue,
                     combo:true
                    }) 
                 }
-              else if (this.state.prevItem === "-" && e.currentTarget.value === "-"){
-                const newItems = [...this.state.display,e.currentTarget.value]
+              else if (this.state.prevItem === "-" && itemValue === "-"){
+                const newItems = [...this.state.display,itemValue]
                   this.setState({
                     display:newItems,
-                    prevItem: e.currentTarget.value,
+                    prevItem: itemValue,
                     combo:true
                   }) 
               }
-              else if (this.state.prevItem === "*" && e.currentTarget.value === "-" ){
-                const newItems = [...this.state.display,e.currentTarget.value]
+              else if (this.state.prevItem === "*" && itemValue === "-" ){
+                const newItems = [...this.state.display,itemValue]
                   this.setState({
                     display:newItems,
-                    prevItem: e.currentTarget.value,
+                    prevItem: itemValue,
                     combo:true
                     })
               }
-              else if (this.state.prevItem === "/" && e.currentTarget.value === "-"){
+              else if (this.state.prevItem === "/" && itemValue === "-"){
                 
-                  const newItems = [...this.state.display,e.currentTarget.value]
+                  const newItems = [...this.state.display,itemValue]
                    this.setState({
                       display:newItems,
-                      prevItem: e.currentTarget.value,
+                      prevItem: itemValue,
                       combo:true
                     })
                }
-               else if (e.currentTarget.value === "."){
-                const newItems = [...this.state.display,e.currentTarget.value]
+               else if (itemValue === "."){
+                const newItems = [...this.state.display,itemValue]
                 this.setState({
                   display:newItems,
-                  prevItem:e.currentTarget.value,
+                  prevItem:itemValue,
                   decimal: true,
                   decimalAllowed:false
                 })
@@ -125,31 +128,31 @@ class App extends React.Component{
                else if (!isNum && isNaN(this.state.prevItem) ){
                 console.log("not num -> currently & prev")
                 const newDisplay = [...this.state.display]
-                newDisplay.splice(newDisplay.length-1,1,e.currentTarget.value)
+                newDisplay.splice(newDisplay.length-1,1,itemValue)
                 
                 console.log("NEW DISPLAY REPLACE")
                 console.log(newDisplay)
                 this.setState({
                 display:newDisplay,
-                prevItem:e.currentTarget.value 
+                prevItem:itemValue 
                 })
               }
               else if ((!isNum && !isNaN(this.state.prevItem))){
-                console.log("2nd item " + e.currentTarget.value)
-                const newItems = [...this.state.display,e.currentTarget.value]
+                console.log("2nd item " + itemValue)
+                const newItems = [...this.state.display,itemValue]
                 this.setState({
                   display:newItems,
-                  prevItem:e.currentTarget.value,
+                  prevItem:itemValue,
                   combo:false,
                   decimal:false
                 })
               }
               else if (isNum){
-                console.log("2nd item " + e.currentTarget.value)
-                const newItems = [...this.state.display,e.currentTarget.value]
+                console.log("2nd item " + itemValue)
+                const newItems = [...this.state.display,itemValue]
                 this.setState({
                   display:newItems,
-                  prevItem:e.currentTarget.value,
+                  prevItem:itemValue,
                   decimal:false,
                 })
               }
